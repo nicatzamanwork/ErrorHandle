@@ -1,10 +1,18 @@
-let img = document.querySelector("img");
+const fetchedData = () => fetch('https://northwind.vercel.app/api/product');
 
-try {
-  fetch(" https://dog.ceo/api/breeds/image/random")
-    .then((response) => response.json())
-    .then((data) => (img.src = data.message));
-  console.log(response);
-} catch (error) {
-  console.log(error);
+
+
+async function add(data, num) {
+	try {
+		return await axios.get(data);
+	} catch (err) {
+		if (num === 1) {
+			throw err;
+		}
+		return await add(data, num - 1);
+	}
 }
+
+const fetchWithRetries = add(fetchData, 4);
+
+fetchWithRetries();
